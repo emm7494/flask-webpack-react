@@ -1,0 +1,15 @@
+FLASK_ENV=development
+FLASK_DEBUG=1
+FLASK_HOST=0.0.0.0
+FLASK_PORT=5000
+FLASK_APP=wsgi.py
+
+#load these manually inside your config.py file
+TESTING=False
+
+# SQLAlchemy ORM
+SQLALCHEMY_TRACK_MODIFICATIONS
+
+# JInja Templating Engine
+EXPLAIN_TEMPLATE_LOADING
+TEMPLATES_AUTO_RELOAD
