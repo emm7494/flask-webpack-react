@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A minimal flask-webpack-react setup.",
   "private": true,
+  "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --config webpack.config.dev.js",
