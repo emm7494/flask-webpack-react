@@ -1,8 +1,10 @@
 const path = require("path");
 const merge = require("webpack-merge");
+const ExtraWatchPlugin = require("extra-watch-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const base = require("./webpack.config.base");
+const MergeWatchedPlugin = require("./MergeWatchedFilesPlugin");
 
 module.exports = merge(base, {
   mode: "development",
@@ -30,10 +32,30 @@ module.exports = merge(base, {
   plugins: [
     new HtmlWebpackPlugin({
       filename: "../../templates/_main.bundle.js.html",
-      template: "./templates/main.bundle.js.html"
+      template: "./templates/main.bundle.js.html",
+      hash: true,
+      inject: false,
+      templateParameters: function(compilation, assets, options) {
+        return {
+          title: "Document title",
+          files: assets,
+          options: options,
+          webpackConfig: compilation.options,
+          webpack: compilation.getStats().toJson(),
+          hash: compilation.getStats().hash
+        };
+      }
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new MergeWatchedPlugin()
+    // new ExtraWatchPlugin({
+    //   dirs: ["../../templates/"],
+    //   files: ["../../templates/_base.html", "../../templates/_layout.html"]
+    // })
   ],
+  watchOptions: {
+    ignored: ["_main.bundle.js.html"]
+  },
   module: {
     rules: [
       {
@@ -41,9 +63,20 @@ module.exports = merge(base, {
         use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
-        test: /\.html$/,
-        use: "html-loader"
+        test: /\.(png|jpe?g|gif|txt)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[path][name].[ext]?[contentHash]"
+            }
+          }
+        ]
       }
+      // {
+      //   test: /\.html$/,
+      //   use: "html-loader"
+      // }
     ]
   }
 });
