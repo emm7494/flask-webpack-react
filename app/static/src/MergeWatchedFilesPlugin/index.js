@@ -6,10 +6,16 @@ class MergeWatchedFilesPlugin {
     };
   }
   apply(compiler) {
-    compiler.hooks.done.tap("Merge Watched Files Plugin", (stats) => {
-      console.log(`${Object.entries(stats).join("\n")}`);
-      // callback();
-    });
+    compiler.hooks.afterCompile.tap(
+      "Merge Watched Files Plugin",
+      (compilation) => {
+        // for (let key of Object.keys(compilation)) {
+        //   console.log(compilation[key]);
+        // }
+        console.log(compilation);
+        // callback();
+      }
+    );
   }
 }
 

@@ -2,7 +2,8 @@ const path = require("path");
 const merge = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const MergeWatchedPlugin = require("./MergeWatchedFilesPlugin");
+// const MergeWatchedPlugin = require("./MergeWatchedFilesPlugin");
+const ExtraWatchPlugin = require("extra-watch-webpack-plugin");
 const base = require("./webpack.config.base");
 
 module.exports = merge(base, {
@@ -13,8 +14,8 @@ module.exports = merge(base, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "../../templates/_main.bundle.js.html",
-      template: "./templates/main.bundle.js.html",
+      filename: "../../templates/_main.bundle.j2",
+      template: "./templates/main.bundle.ejs",
       hash: true,
       inject: false,
       templateParameters: (compilation, assets, options) => {
@@ -29,7 +30,11 @@ module.exports = merge(base, {
       }
     }),
     new CleanWebpackPlugin(),
-    new MergeWatchedPlugin()
+    // new MergeWatchedPlugin(),
+    new ExtraWatchPlugin({
+      // dirs: ["../../templates/"],
+      files: ["../../templates/**/*.html"]
+    })
   ],
   module: {
     rules: [

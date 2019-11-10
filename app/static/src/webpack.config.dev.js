@@ -4,7 +4,7 @@ const ExtraWatchPlugin = require("extra-watch-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const base = require("./webpack.config.base");
-const MergeWatchedPlugin = require("./MergeWatchedFilesPlugin");
+// const MergeWatchedPlugin = require("./MergeWatchedFilesPlugin");
 
 module.exports = merge(base, {
   mode: "development",
@@ -31,11 +31,11 @@ module.exports = merge(base, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "../../templates/_main.bundle.js.html",
-      template: "./templates/main.bundle.js.html",
+      filename: "../../templates/_main.bundle.j2",
+      template: "./templates/main.bundle.ejs",
       hash: true,
       inject: false,
-      templateParameters: function(compilation, assets, options) {
+      templateParameters: (compilation, assets, options) => {
         return {
           title: "Document title",
           files: assets,
@@ -47,15 +47,12 @@ module.exports = merge(base, {
       }
     }),
     new CleanWebpackPlugin(),
-    new MergeWatchedPlugin()
-    // new ExtraWatchPlugin({
-    //   dirs: ["../../templates/"],
-    //   files: ["../../templates/_base.html", "../../templates/_layout.html"]
-    // })
+    // new MergeWatchedPlugin(),
+    new ExtraWatchPlugin({
+      // dirs: ["../../templates/"],
+      files: ["../../templates/**/*.html"]
+    })
   ],
-  watchOptions: {
-    ignored: ["_main.bundle.js.html"]
-  },
   module: {
     rules: [
       {
