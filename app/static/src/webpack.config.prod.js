@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const MergeWatchedPlugin = require("./MergeWatchedFilesPlugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ExtraWatchPlugin = require("extra-watch-webpack-plugin");
 const base = require("./webpack.config.base");
 const OptimizeCssPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -38,12 +37,8 @@ module.exports = merge(base, {
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].bundle.css"
-    }),
-    // new MergeWatchedPlugin(),
-    new ExtraWatchPlugin({
-      // dirs: ["../../templates/"],
-      files: ["../../templates/**/*.html"]
     })
+    // new MergeWatchedPlugin(),
   ],
   module: {
     rules: [
