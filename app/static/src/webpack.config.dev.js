@@ -31,8 +31,8 @@ module.exports = merge(base, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "../../templates/_main.bundle.j2",
-      template: "./templates/main.bundle.ejs",
+      filename: "../../templates/_scripts.bundle.j2",
+      template: "./templates/scripts.bundle.ejs",
       hash: true,
       inject: false,
       templateParameters: (compilation, assets, options) => {
@@ -50,7 +50,7 @@ module.exports = merge(base, {
     // new MergeWatchedPlugin(),
     new ExtraWatchPlugin({
       // dirs: ["../../templates/"],
-      files: ["../../templates/**/*.html"]
+      files: ["../../templates/**/*.html", "../../**/*.py"]
     })
   ],
   module: {

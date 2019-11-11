@@ -3,8 +3,11 @@ const merge = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const MergeWatchedPlugin = require("./MergeWatchedFilesPlugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ExtraWatchPlugin = require("extra-watch-webpack-plugin");
 const base = require("./webpack.config.base");
+const OptimizeCssPlugin = require("optimize-css-assets-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = merge(base, {
   mode: "production",
@@ -12,12 +15,15 @@ module.exports = merge(base, {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "../dist")
   },
+  optimization: {
+    minimizer: [new OptimizeCssPlugin(), new TerserPlugin()]
+  },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "../../templates/_main.bundle.j2",
-      template: "./templates/main.bundle.ejs",
+      filename: "../../templates/_scripts.bundle.j2",
+      template: "./templates/scripts.bundle.ejs",
       hash: true,
-      inject: false,
+      inject: true,
       templateParameters: (compilation, assets, options) => {
         return {
           title: "Document title",
@@ -30,6 +36,9 @@ module.exports = merge(base, {
       }
     }),
     new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "[name].bundle.css"
+    }),
     // new MergeWatchedPlugin(),
     new ExtraWatchPlugin({
       // dirs: ["../../templates/"],
@@ -40,7 +49,7 @@ module.exports = merge(base, {
     rules: [
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       },
       {
         test: /\.(png|jpe?g|gif|txt)$/,
