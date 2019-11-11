@@ -31,10 +31,10 @@ module.exports = merge(base, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "../../templates/_scripts.bundle.j2",
-      template: "./templates/scripts.bundle.ejs",
+      filename: "../../templates/_base.j2",
+      template: "./templates/base.ejs",
       hash: true,
-      inject: false,
+      inject: true,
       templateParameters: (compilation, assets, options) => {
         return {
           title: "Document title",
