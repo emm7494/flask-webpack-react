@@ -8,6 +8,7 @@ const base = require("./webpack.config.base");
 
 module.exports = merge(base, {
   mode: "development",
+  devtool: "none",
   devServer: {
     open: false,
     writeToDisk: true,
@@ -32,7 +33,7 @@ module.exports = merge(base, {
   plugins: [
     new HtmlWebpackPlugin({
       filename: "../../templates/_base.j2",
-      template: "./templates/base.ejs",
+      template: "./templates/base.html",
       hash: true,
       inject: true,
       templateParameters: (compilation, assets, options) => {
@@ -62,6 +63,12 @@ module.exports = merge(base, {
       {
         test: /\.(png|jpe?g|gif|txt)$/,
         use: [
+          // {
+          //   loader: "url-loader",
+          //   options: {
+          //     limit: 8192
+          //   }
+          // },
           {
             loader: "file-loader",
             options: {
@@ -69,11 +76,11 @@ module.exports = merge(base, {
             }
           }
         ]
+      },
+      {
+        test: /\.html$/,
+        use: "html-loader"
       }
-      // {
-      //   test: /\.html$/,
-      //   use: "html-loader"
-      // }
     ]
   }
 });

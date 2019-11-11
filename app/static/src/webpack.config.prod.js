@@ -19,8 +19,20 @@ module.exports = merge(base, {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      minify: {
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+        removeComments: true,
+        removeEmptyAttributes: true,
+        removeEmptyElements: true,
+        removeOptionalTags: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        removeTagWhitespace: true
+      },
       filename: "../../templates/_base.j2",
-      template: "./templates/base.ejs",
+      template: "./templates/base.html",
       hash: true,
       inject: true,
       templateParameters: (compilation, assets, options) => {
@@ -49,6 +61,12 @@ module.exports = merge(base, {
       {
         test: /\.(png|jpe?g|gif|txt)$/,
         use: [
+          // {
+          //   loader: "url-loader",
+          //   options: {
+          //     limit: 8192
+          //   }
+          // },
           {
             loader: "file-loader",
             options: {
@@ -56,11 +74,11 @@ module.exports = merge(base, {
             }
           }
         ]
+      },
+      {
+        test: /\.html$/,
+        use: "html-loader"
       }
-      // {
-      //   test: /\.html$/,
-      //   use: "html-loader"
-      // }
     ]
   }
 });
