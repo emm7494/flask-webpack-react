@@ -1,0 +1,45 @@
+{
+  "name": "flask-webpack-react",
+  "version": "1.0.0",
+  "description": "A minimal flask-webpack-react setup.",
+  "private": true,
+  "main": "./index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --config webpack.config.dev.js",
+    "serve": "flask run",
+    "build": "webpack --config webpack.config.prod.js"
+  },
+  "keywords": [
+    "python",
+    "javascript",
+    "flask",
+    "webpack",
+    "react"
+  ],
+  "author": "Emmanuel Adu Gyamfi",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.5",
+    "css-loader": "^3.2.0",
+    "extra-watch-webpack-plugin": "^1.0.3",
+    "extract-loader": "^3.1.0",
+    "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.13.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "glob": "^7.1.6"
+  }
+}
