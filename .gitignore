@@ -291,4 +291,6 @@ pip-selfcheck.json
 .vscode
 *.code-workspace
 .direnv
-_main.bundle.js.html
+app/templates
+app/static
+all.zip
